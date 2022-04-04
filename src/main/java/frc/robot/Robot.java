@@ -53,6 +53,10 @@ public class Robot extends TimedRobot {
 
     gyro.calibrate();
 
+    SmartDashboard.putNumber("kP", .0005);
+    SmartDashboard.putNumber("kI", .0005);
+    //SmartDashboard.put
+
   }
 
   /**
@@ -72,7 +76,7 @@ public class Robot extends TimedRobot {
 
     // Update the heading periodically in all modes
     SmartDashboard.putNumber("Gyro", gyro.getAngle());
-    SmartDashboard.putNumber("Left Encoder", Drive.getLeftEncoder());
+    SmartDashboard.putNumber("Left Encoder", Drive.getLeftEncoder());    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -119,7 +123,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     //camServer.setSource(topCam);
-    
   }
 
   @Override

@@ -42,6 +42,9 @@ public class Drive extends SubsystemBase {
     rightDrive.setInverted(false);
     rightFollow.setInverted(false);
     rightFollow.follow(rightDrive);
+
+    //leftDrive.configOpenloopRamp(.1);
+    //rightDrive.configOpenloopRamp(.1);
     
     resetEncoders();
 
@@ -97,21 +100,24 @@ public class Drive extends SubsystemBase {
 
   }
 
-  double kP = 1.0 / 10_000;
+  double kP = 1.0 / 30_000;
+  double kT = 1.0 / 10_000;
   double error = 0;
 
   public void autoTarget() {
     
     error = target - getLeftEncoder();
+    double turnError = getLeftEncoder() - getRightEncoder();
     SmartDashboard.putNumber("Drive error", error);
     
-    diffDrive.tankDrive(-error * kP, -error * kP);
+    diffDrive.arcadeDrive(-error * kP, turnError * kT);
 
-    if (Math.abs(error) < 500) {
+    if (Math.abs(error) < 50) {
       isDone = true;
     } else {
       isDone = false;
     }
+
   }
 
   public void autoReverse(int inches, double speed) {
@@ -193,6 +199,11 @@ public class Drive extends SubsystemBase {
 
   public void setTarget(int inches) {
      target = inches / (6 * Math.PI) * 4096;
+  }
+
+  public static void setRamp(double t) {
+    leftDrive.configOpenloopRamp(t);
+    rightDrive.configOpenloopRamp(t);
   }
 
 }
