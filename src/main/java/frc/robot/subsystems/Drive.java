@@ -43,8 +43,8 @@ public class Drive extends SubsystemBase {
     rightFollow.setInverted(false);
     rightFollow.follow(rightDrive);
 
-    //leftDrive.configOpenloopRamp(.1);
-    //rightDrive.configOpenloopRamp(.1);
+    leftDrive.configOpenloopRamp(0);
+    rightDrive.configOpenloopRamp(0);
     
     resetEncoders();
 
@@ -109,7 +109,7 @@ public class Drive extends SubsystemBase {
     error = target - getLeftEncoder();
     double turnError = getLeftEncoder() - getRightEncoder();
     SmartDashboard.putNumber("Drive error", error);
-    
+
     diffDrive.arcadeDrive(-error * kP, turnError * kT);
 
     if (Math.abs(error) < 50) {
@@ -158,20 +158,32 @@ public class Drive extends SubsystemBase {
 
   public void autoTurn(int degrees) {
 
-    double kP = 0.012;
+    double kP = 0.01;
 
     // CCW is positive
     double error = degrees - Robot.gyro.getAngle();
 
     SmartDashboard.putNumber("error", error);
 
-    if (Math.abs(error) > 5) {
-      diffDrive.tankDrive(error * kP, -error * kP);
+    double turnSpeed = error * kP;
+
+    if (turnSpeed > .75) {
+      turnSpeed = .75;
+    }
+
+    if (turnSpeed < -.75) {
+      turnSpeed = -.75;
+    }
+
+    diffDrive.tankDrive(turnSpeed, -turnSpeed);
+    /* if (Math.abs(error) > 5) {
+      diffDrive.tankDrive(turnSpeed, -turnSpeed);
       
     } else {
       isDone = true;
       diffDrive.tankDrive(0.0, 0.0);
     }
+    */
   }
 
   public void autoTurn_worked(int degrees) {
@@ -201,9 +213,5 @@ public class Drive extends SubsystemBase {
      target = inches / (6 * Math.PI) * 4096;
   }
 
-  public static void setRamp(double t) {
-    leftDrive.configOpenloopRamp(t);
-    rightDrive.configOpenloopRamp(t);
-  }
 
 }

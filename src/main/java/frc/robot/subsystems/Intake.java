@@ -5,8 +5,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,8 +15,8 @@ import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
 
-  TalonSRX motor = new TalonSRX(RobotMap.INTAKE_ARM);
-  VictorSPX spinner = new VictorSPX(RobotMap.SPINNER);
+  WPI_TalonSRX motor = new WPI_TalonSRX(RobotMap.INTAKE_ARM);
+  WPI_VictorSPX spinner = new WPI_VictorSPX(RobotMap.SPINNER);
 
   static DigitalInput bottomLimitSwitch = new DigitalInput(RobotMap.ARM_BOTTOM_LIMIT);
   static DigitalInput topLimitSwitch = new DigitalInput(RobotMap.ARM_TOP_LIMIT);
@@ -32,7 +32,10 @@ public class Intake extends SubsystemBase {
   private double holdSpeed = .1;
 
   /** Creates a new Intake. */
-  public Intake() {}
+  public Intake() {
+    addChild("Arm", motor);
+    addChild("Intake", spinner);
+  }
 
   @Override
   public void periodic() {

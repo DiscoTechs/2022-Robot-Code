@@ -5,20 +5,22 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Elevator extends SubsystemBase {
 
-  VictorSPX elevator = new VictorSPX(RobotMap.ELEVATOR);
+  WPI_VictorSPX elevator = new WPI_VictorSPX(RobotMap.ELEVATOR);
 
   public final static int UP = -1;
   public final static int DOWN = 1;
 
   /** Creates a new Elevator. */
-  public Elevator() {}
+  public Elevator() {
+    addChild("Elevator", elevator);
+  }
 
   @Override
   public void periodic() {

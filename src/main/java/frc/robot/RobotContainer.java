@@ -5,19 +5,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoDrive;
 import frc.robot.commands.AutoFrontBlue;
 import frc.robot.commands.AutoFrontRed;
 import frc.robot.commands.AutoSide;
 import frc.robot.commands.AutoTest;
-import frc.robot.commands.ChangeRamp;
 import frc.robot.commands.ControlElevator;
 import frc.robot.commands.IntakeCargo;
 import frc.robot.commands.OutAndBak;
@@ -57,7 +53,7 @@ public class RobotContainer {
     drivepad = new XboxController(RobotMap.DRIVEPAD);
 
     // Configure the button bindings
-    //configureButtonBindings();
+    configureButtonBindings();
 
     // Why is the auto-select here? Because the container has all of the subsystem
     // objects
@@ -93,15 +89,9 @@ public class RobotContainer {
    * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  /* private void configureButtonBindings() {
+  private void configureButtonBindings() {
 
-    JoystickButton foo = new JoystickButton(drivepad, RobotMap.XBX_D);
-    foo.whenPressed(new ChangeRamp(3));
-
-    JoystickButton bar = new JoystickButton(drivepad, RobotMap.XBX_C);
-    bar.whenPressed(new ChangeRamp(0));
-
-  } */
+  } 
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

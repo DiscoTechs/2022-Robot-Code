@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Intake;
@@ -15,7 +16,35 @@ public class AutoTest extends SequentialCommandGroup {
   /** Creates a new AutoTest. */
   public AutoTest(Drive drive, Intake intake) {
 
-    addCommands(new AutoD2(drive, 120));
+    // 3 Ball Test
+
+    // shoot ball
+    System.out.println("OUT");
+    // bakc up
+    addCommands(new AutoD2(drive, -24.4).withTimeout(2));
+    // rotate 
+    addCommands(new AutoTurn(drive, 122).withTimeout(1.5));
+    // arm down
+    System.out.println("ARM DOWN");
+    // get two balls!!!!  lol thats sounds wrong
+    addCommands(new AutoD2(drive, 285.2));
+
+    //addCommands(new ParallelCommandGroup(
+    //    new AutoD2(drive, 285.2),
+    //    new AutoSpinner(intake, AutoSpinner.IN))
+    //  ).withTimeout(10);     
+    // drive bak
+    addCommands(new AutoD2(drive, -285.2));
+    // arm up
+    System.out.println("ARM UP");
+    // rotate 
+    addCommands(new AutoTurn(drive, -122).withTimeout(1.5));
+    // forawrd!
+    addCommands(new AutoD2(drive, 24.4).withTimeout(2));
+    // out
+    System.out.println("OUT");
+    
+
       
     //addCommands(new AutoSpinner(intake, AutoSpinner.IN).withTimeout(1));
     //addCommands(new AutoDrive(drive, ));

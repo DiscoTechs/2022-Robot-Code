@@ -12,14 +12,16 @@ import frc.robot.subsystems.Drive;
 
 public class AutoD2 extends CommandBase {
 
-  private double distance = 24;
+  private double distance = 60;
   private double kP = 1.0 / 10_000;
   private double kI;
   private double kD;
   private Drive drive;
   private double setpoint;
   private final double iLimit = 1;
+  double error = 0;
   double errorSum = 0;
+  double errorRate = 0;
   double lastError = 0;
   double lastTimestamp = 0;
 
@@ -31,7 +33,7 @@ public class AutoD2 extends CommandBase {
     this.drive = drive;
     addRequirements(this.drive);
     
-    setpoint = .5 * distance / (6 * Math.PI) * 4096;
+    setpoint =  distance / (6 * Math.PI) * 4096;
   }
 
   // Called when the command is initially scheduled.
@@ -39,21 +41,22 @@ public class AutoD2 extends CommandBase {
   public void initialize() {
 
     drive.resetEncoders();
+    Robot.gyro.reset();
+    error = 0;
     errorSum = 0;
     lastError = 0;
     lastTimestamp = Timer.getFPGATimestamp();
-    Robot.gyro.reset();
-
+    
     kP = SmartDashboard.getNumber("kP", 0);
     kI = SmartDashboard.getNumber("KI", 0);
-
+    kD = SmartDashboard.getNumber("kD", 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    double error = setpoint - Drive.getLeftEncoder();
+    error = setpoint - Drive.getLeftEncoder();
 
     // calculations
     double dt = Timer.getFPGATimestamp() - lastTimestamp;
@@ -62,13 +65,24 @@ public class AutoD2 extends CommandBase {
       errorSum += error * dt;
     }
 
-    double outputSpeed = kP * error + kI * errorSum;
+    errorRate = (error - lastError) / dt;
 
-    if (outputSpeed > .6) {
-      outputSpeed = .6;
+    double outputSpeed = kP * error + kI * errorSum + kD * errorRate;
+
+    double maxSpeed = 0.5;
+
+    if (outputSpeed > maxSpeed) {
+      outputSpeed = maxSpeed;
     }
 
-    drive.vDriveArcade(-outputSpeed, 0);
+    if (outputSpeed < -maxSpeed) {
+      outputSpeed = -maxSpeed;
+    }
+
+    double turnError = Robot.gyro.getAngle();
+    double kT = 0.1;
+
+    drive.vDriveArcade(-outputSpeed, -turnError * kT);
 
     // update last- variables
     lastTimestamp = Timer.getFPGATimestamp();
@@ -76,7 +90,6 @@ public class AutoD2 extends CommandBase {
 
     SmartDashboard.putNumber("D2 Error", error);
     SmartDashboard.putNumber("Setpoint", setpoint);
-
   }
 
   // Called once the command ends or is interrupted.
@@ -86,7 +99,7 @@ public class AutoD2 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(error) < 100;
   }
 
 

@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("kP", .0005);
     SmartDashboard.putNumber("kI", .0005);
-    //SmartDashboard.put
+    SmartDashboard.putNumber("KD", .0001);
 
   }
 
