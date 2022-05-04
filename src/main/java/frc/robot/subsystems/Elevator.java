@@ -13,6 +13,8 @@ import frc.robot.RobotMap;
 public class Elevator extends SubsystemBase {
 
   WPI_VictorSPX elevator = new WPI_VictorSPX(RobotMap.ELEVATOR);
+  WPI_VictorSPX winch = new WPI_VictorSPX(RobotMap.WINCH);
+
 
   public final static int UP = -1;
   public final static int DOWN = 1;
@@ -20,6 +22,7 @@ public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
   public Elevator() {
     addChild("Elevator", elevator);
+    addChild("Winch", winch);
   }
 
   @Override
@@ -28,7 +31,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void down() {
-      elevator.set(ControlMode.PercentOutput, DOWN * 1.0);
+    elevator.set(ControlMode.PercentOutput, DOWN * 1.0);
   }
 
   public void up() {
@@ -38,4 +41,9 @@ public class Elevator extends SubsystemBase {
   public void stop() {
     elevator.set(ControlMode.PercentOutput, 0.0);
   }
+
+  public void winch(double speed) {
+    winch.set(ControlMode.PercentOutput, speed);
+  }
+
 }

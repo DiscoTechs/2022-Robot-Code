@@ -12,29 +12,35 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoSide extends SequentialCommandGroup {
+public class AutoSide3BALL extends SequentialCommandGroup {
   /** Creates a new AutoTest. */
-  public AutoSide(Drive drive, Intake intake) {
-
-    // Eject Cargo and back up (3 secs)
-    addCommands(new SimpleScore(drive, intake));
-
-    // rotate 95 degrees
-    addCommands(new AutoTurn(drive, 95).withTimeout(1.5));
-    addCommands(new AutoArm(intake, AutoArm.DOWN).withTimeout(2));
-
+  public AutoSide3BALL(Drive drive, Intake intake) {
+    
+    // shoot ball
+    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(1.5));
+    // bakc up
+    addCommands(new AutoD2(drive, -24.4).withTimeout(.75));
+    // rotate 
+    addCommands(new AutoTurn(drive, 110).withTimeout(1.5));
+    // arm down
+    addCommands(new AutoArm(intake, AutoArm.DOWN).withTimeout(1.75));
+    // get two balls!!!!  lol thats sounds wrong
+  
     addCommands(new ParallelCommandGroup(
-        new AutoDrive(drive, 72),
-        new AutoSpinner(intake, AutoSpinner.IN))
-      .withTimeout(1.75));     
-
+        new AutoD2(drive, 280.2),
+        new AutoSpinner(intake, AutoSpinner.IN)).withTimeout(7));     
+    // drive bak
+    addCommands(new AutoD2(drive, -280.2));
+    // arm up
     addCommands(new AutoArm(intake, AutoArm.UP).withTimeout(1.75));
-    addCommands(new AutoDrive(drive, -87).withTimeout(1.75));
-    addCommands(new AutoTurn(drive, -100).withTimeout(1.5));
-    addCommands(new AutoDrive(drive, 96, .6).withTimeout(2));
-    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(2));
+    // rotate 
+    addCommands(new AutoTurn(drive, -112).withTimeout(1.5));
+    // forawrd!
+    addCommands(new AutoD2(drive, 28).withTimeout(2));
+    // out
+    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(1.5));
+    
 
-      
     //addCommands(new AutoSpinner(intake, AutoSpinner.IN).withTimeout(1));
     //addCommands(new AutoDrive(drive, ));
     

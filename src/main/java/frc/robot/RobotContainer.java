@@ -10,14 +10,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.AutoDrive;
-import frc.robot.commands.AutoFrontBlue;
-import frc.robot.commands.AutoFrontRed;
-import frc.robot.commands.AutoSide;
+import frc.robot.commands.AutoFront2BALL;
+import frc.robot.commands.AutoSide2BALL;
+import frc.robot.commands.AutoSide3BALL;
 import frc.robot.commands.AutoTest;
 import frc.robot.commands.ControlElevator;
 import frc.robot.commands.IntakeCargo;
 import frc.robot.commands.OutAndBak;
-import frc.robot.commands.SimpleScore;
+import frc.robot.commands.Auto1Ball;
 import frc.robot.commands.TeleDrive;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Elevator;
@@ -58,17 +58,17 @@ public class RobotContainer {
     // Why is the auto-select here? Because the container has all of the subsystem
     // objects
     autoChooser = new SendableChooser<Command>();
-    autoChooser.addOption("Do Nothing", new AutoDrive(drive, 0));
-    autoChooser.addOption("Simple Score", new SimpleScore(drive, intake));
+    autoChooser.addOption("Do Nothing.", new AutoDrive(drive, 0));
+    autoChooser.addOption("Auto1Ball", new Auto1Ball(drive, intake));
     autoChooser.addOption("Backup", new AutoDrive(drive, -48));
     autoChooser.addOption("OutandBak", new OutAndBak(drive, intake));
-    autoChooser.addOption("AutoFrontBLUE", new AutoFrontBlue(drive, intake));
-    autoChooser.setDefaultOption("AutoTest", new AutoTest(drive, intake));
-    autoChooser.addOption("AutoFrontRED", new AutoFrontRed(drive, intake));
-    autoChooser.addOption("AutoSide", new AutoSide(drive, intake));
+    autoChooser.setDefaultOption("AutoSide3BALL", new AutoSide3BALL(drive, intake));
+    autoChooser.addOption("AutoFront2Ball", new AutoFront2BALL(drive, intake));
+    autoChooser.addOption("AutoSide2BALL", new AutoSide2BALL(drive, intake));
+    autoChooser.addOption("AutoTest", new AutoTest(drive, intake));
 
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putData("Auto/Auto", autoChooser);
 
     hubChooser = new SendableChooser<Integer>();
     hubChooser.setDefaultOption("Front",0);

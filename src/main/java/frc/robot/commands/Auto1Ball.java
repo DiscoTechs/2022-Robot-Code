@@ -11,18 +11,18 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SimpleScore extends SequentialCommandGroup {
+public class Auto1Ball extends SequentialCommandGroup {
   /** Creates a new SimpleScore. */
-  public SimpleScore(Drive drive, Intake intake) {
+  public Auto1Ball(Drive drive, Intake intake) {
 
     // push in
     //addCommands(new AutoDrive(drive, 24));
 
     // SCORE!!!
-    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(.75));
+    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(10));
 
     // Get out !!
-    addCommands(new AutoDrive(drive, -80, .6).withTimeout(2));
+    addCommands(new AutoD2(drive, -80).withTimeout(2));
 
     // turn
     //addCommands(new AutoTurn(drive, 2400).withTimeout(2));

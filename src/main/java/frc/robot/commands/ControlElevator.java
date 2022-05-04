@@ -49,7 +49,16 @@ public class ControlElevator extends CommandBase {
     } else {
       elevator.stop();
     }
+
+    if (gamepad.getRawButton(RobotMap.XBX_C)) {
+      elevator.winch(-0.2);
+    } else if (gamepad.getRawButton(RobotMap.XBX_D)) {
+      elevator.winch(0.2);
+    } else {
+      elevator.winch(0.0);
+    }
   }
+  
 
   // Called once the command ends or is interrupted.
   @Override

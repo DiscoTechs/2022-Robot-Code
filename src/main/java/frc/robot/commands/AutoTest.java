@@ -13,58 +13,38 @@ import frc.robot.subsystems.Intake;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoTest extends SequentialCommandGroup {
-  /** Creates a new AutoTest. */
+  /** Creates a new SimpleScore. */
   public AutoTest(Drive drive, Intake intake) {
 
-    // 3 Ball Test
+    addCommands(new AutoTurn(drive, -90).withTimeout(2));
 
-    // shoot ball
-    System.out.println("OUT");
-    // bakc up
-    addCommands(new AutoD2(drive, -24.4).withTimeout(2));
-    // rotate 
-    addCommands(new AutoTurn(drive, 122).withTimeout(1.5));
-    // arm down
-    System.out.println("ARM DOWN");
-    // get two balls!!!!  lol thats sounds wrong
-    addCommands(new AutoD2(drive, 285.2));
 
-    //addCommands(new ParallelCommandGroup(
-    //    new AutoD2(drive, 285.2),
-    //    new AutoSpinner(intake, AutoSpinner.IN))
-    //  ).withTimeout(10);     
-    // drive bak
-    addCommands(new AutoD2(drive, -285.2));
-    // arm up
-    System.out.println("ARM UP");
-    // rotate 
-    addCommands(new AutoTurn(drive, -122).withTimeout(1.5));
-    // forawrd!
-    addCommands(new AutoD2(drive, 24.4).withTimeout(2));
-    // out
-    System.out.println("OUT");
+    /* // Spin!
+    addCommands(new AutoTurn(drive, 90).withTimeout(2));
     
+    addCommands(new AutoArm(intake, AutoArm.DOWN).withTimeout(1.75));
 
-      
-    //addCommands(new AutoSpinner(intake, AutoSpinner.IN).withTimeout(1));
-    //addCommands(new AutoDrive(drive, ));
-    
+    // backward/pickup
+    addCommands(new ParallelCommandGroup(
+      new AutoD2(drive, 48),
+      new AutoSpinner(intake, AutoSpinner.IN))
+      .withTimeout(2));
 
-    //addCommands(new AutoDrive(drive, 72));
-    //addCommands(new AutoArm(intake, AutoArm.DOWN).withTimeout(2));
-    //addCommands(new AutoDrive(drive, -72).withTimeout(2));
-    //addCommands(new AutoArm(intake, AutoArm.UP).withTimeout(2));
-    //addCommands(new AutoTurn(drive, 90));
+    addCommands(new AutoArm(intake, AutoArm.UP).withTimeout(1.75));
+
+    addCommands(new AutoTurn(drive, 90).withTimeout(2));
+
+    addCommands(new AutoD2(drive, 48).withTimeout(2));
 
     // SCORE!!!
-    //addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(1));
+    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(2));
 
-    // Get out !!
-    //addCommands(new AutoDrive(drive, -80, .6));
 
     // turn
     //addCommands(new AutoTurn(drive, 2400).withTimeout(2));
+
+    */
     
+
   }
-  
 }

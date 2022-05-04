@@ -45,15 +45,14 @@ public class Robot extends TimedRobot {
 
     topCam = CameraServer.startAutomaticCapture(0);
     bottomCam = CameraServer.startAutomaticCapture(1);
-    camServer = CameraServer.getServer();
-    
+    //camServer = CameraServer.getServer();
+
     topCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     bottomCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    //CameraServer.startAutomaticCapture();
 
     gyro.calibrate();
 
-    SmartDashboard.putNumber("kP", .0005);
+    SmartDashboard.putNumber("kP", .00018);
     SmartDashboard.putNumber("kI", .0005);
     SmartDashboard.putNumber("KD", .0001);
 

@@ -12,26 +12,50 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoFrontBlue extends SequentialCommandGroup {
+public class AutoSide2BALL extends SequentialCommandGroup {
   /** Creates a new AutoTest. */
-  public AutoFrontBlue(Drive drive, Intake intake) {
+  public AutoSide2BALL(Drive drive, Intake intake) {
 
-    // Eject Cargo and back up (3 secs)
+    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(1.5));
+    // bakc up
+    addCommands(new AutoD2(drive, -24.4).withTimeout(.75));
+    // rotate 
+    addCommands(new AutoTurn(drive, 110).withTimeout(1.5));
+    // arm down
+    addCommands(new AutoArm(intake, AutoArm.DOWN).withTimeout(1.75));
+    // get two balls!!!!  lol thats sounds wrong
+    addCommands(new ParallelCommandGroup(
+        new AutoD2(drive, 124),
+        new AutoSpinner(intake, AutoSpinner.IN)).withTimeout(4));     
+    // drive bak
+    addCommands(new AutoD2(drive, -124));
+    // arm up
+    addCommands(new AutoArm(intake, AutoArm.UP).withTimeout(1.75));
+    // rotate 
+    addCommands(new AutoTurn(drive, -112).withTimeout(1.5));
+    // forawrd!
+    addCommands(new AutoD2(drive, 28).withTimeout(2));
+    // out
+    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(1.5));
+   
+   
+   
+    /* // Eject Cargo and back up (3 secs)
     addCommands(new SimpleScore(drive, intake));
 
-    // set rotation for FRONT hub 
-    addCommands(new AutoTurn(drive, 110).withTimeout(1.5));
+    // rotate 95 degrees
+    addCommands(new AutoTurn(drive, 122).withTimeout(1.5));
     addCommands(new AutoArm(intake, AutoArm.DOWN).withTimeout(2));
 
     addCommands(new ParallelCommandGroup(
-        new AutoDrive(drive, 63),
+        new AutoDrive(drive, 124),
         new AutoSpinner(intake, AutoSpinner.IN))
       .withTimeout(1.75));     
 
     addCommands(new AutoArm(intake, AutoArm.UP).withTimeout(1.75));
-    addCommands(new AutoDrive(drive, -78).withTimeout(1.75));
-    addCommands(new AutoTurn(drive, -110).withTimeout(1.75));
-    addCommands(new AutoDrive(drive, 92, .6).withTimeout(2));
+    addCommands(new AutoD2(drive, -87).withTimeout(1.75));
+    addCommands(new AutoTurn(drive, -100).withTimeout(1.5));
+    addCommands(new AutoD2(drive, 96, .6).withTimeout(2));
     addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(2));
 
       
@@ -52,7 +76,7 @@ public class AutoFrontBlue extends SequentialCommandGroup {
     //addCommands(new AutoDrive(drive, -80, .6));
 
     // turn
-    //addCommands(new AutoTurn(drive, 2400).withTimeout(2));
+    //addCommands(new AutoTurn(drive, 2400).withTimeout(2)); */
     
   }
   

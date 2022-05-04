@@ -69,7 +69,7 @@ public class AutoD2 extends CommandBase {
 
     double outputSpeed = kP * error + kI * errorSum + kD * errorRate;
 
-    double maxSpeed = 0.5;
+    double maxSpeed = 0.8;
 
     if (outputSpeed > maxSpeed) {
       outputSpeed = maxSpeed;

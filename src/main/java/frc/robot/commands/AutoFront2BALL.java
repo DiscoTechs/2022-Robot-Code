@@ -12,12 +12,36 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoFrontRed extends SequentialCommandGroup {
+public class AutoFront2BALL extends SequentialCommandGroup {
   /** Creates a new AutoTest. */
-  public AutoFrontRed(Drive drive, Intake intake) {
+  public AutoFront2BALL(Drive drive, Intake intake) {
 
-    // Eject Cargo and back up (3 secs)
-    addCommands(new SimpleScore(drive, intake));
+    // Eject Cargo 
+    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(1.5));
+    // drive bak
+    addCommands(new AutoD2(drive, -65.7).withTimeout(1.75));
+    // turn to cargo
+    addCommands(new AutoTurn(drive, 112).withTimeout(1.5));
+    // arm down
+    addCommands(new AutoArm(intake, AutoArm.DOWN).withTimeout(1.75));
+    // get the ball!!    
+    addCommands(new ParallelCommandGroup(
+      new AutoD2(drive, 56),
+      new AutoSpinner(intake, AutoSpinner.IN)).withTimeout(1.75));
+    // come back
+    addCommands(new AutoD2(drive, -56).withTimeout(1.75));
+    // arm up
+    addCommands(new AutoArm(intake, AutoArm.UP).withTimeout(1.75));
+    // rotate 
+    addCommands(new AutoTurn(drive, -119).withTimeout(1.5));
+    // forawrd!
+    addCommands(new AutoD2(drive, 69).withTimeout(2));
+    // out
+    addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(1.5));
+
+
+    
+    /* (new SimpleScore(drive, intake));
 
     // set rotation for FRONT hub 
     addCommands(new AutoTurn(drive, 110).withTimeout(1.5));
@@ -33,6 +57,8 @@ public class AutoFrontRed extends SequentialCommandGroup {
     addCommands(new AutoTurn(drive, -120).withTimeout(1.75));
     addCommands(new AutoDrive(drive, 96, .6).withTimeout(2));
     addCommands(new AutoSpinner(intake, AutoSpinner.OUT).withTimeout(2));
+
+    */
 
       
     //addCommands(new AutoSpinner(intake, AutoSpinner.IN).withTimeout(1));
